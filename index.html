@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> ☕️🍸🍻💖 </title>
+    <title> 🍽🍸🍻💖 </title>
 
     <!-- WebP görselleri için ön yükleme -->
     <link rel="preload" as="image" href="number11.webp">
@@ -97,18 +97,6 @@
             transition: transform 0.2s ease, background-color 0.2s ease;
         }
 
-        .option-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fdf2f8;
-            border: 1px solid rgba(236, 72, 153, 0.4);
-            width: 100%;
-            margin-bottom: 5px;
-        }
-
-        .option-btn:hover {
-            background: rgba(236, 72, 153, 0.3);
-        }
-
         #yesBtn {
             background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
             color: #ffffff;
@@ -117,7 +105,8 @@
             width: 100%;
         }
 
-        input[type="date"] {
+        /* Takvim ve Saat Input Stilleri */
+        input[type="date"], input[type="time"] {
             width: 100%;
             padding: 14px;
             border-radius: 16px;
@@ -136,7 +125,7 @@
 
 <div class="container">
     <!-- Açılış Başlığı -->
-    <h1 id="question">Merhaba Gecoshka Lütfen müsait olduğun tarihi seçer misin ☕️🍸🍻</h1>
+    <h1 id="question">Merhaba Gecoshka lütfen müsait olduğun tarihi seçer misin 🍽🍸🍻</h1>
     
     <div class="img-wrapper">
         <!-- 1. Görsel: number11.webp -->
@@ -145,7 +134,7 @@
     
     <div class="buttons" id="buttonArea">
         <input type="date" id="tarihInput">
-        <button id="yesBtn" onclick="takvimTarihiKaydet()">Tarihi Onayla 🚀</button>
+        <button id="yesBtn" onclick="takvimTarihiKaydet()">Tarihi Onayla </button>
     </div>
 </div>
 
@@ -153,7 +142,6 @@
     const webpListesi = ["number11.webp", "number17.webp", "number18.webp"];
     const yuklenenGorseller = {};
 
-    // Görselleri önceden belleğe yükle
     webpListesi.forEach(src => {
         const img = new Image();
         img.src = src;
@@ -163,7 +151,6 @@
     let secilenTarih = "";
     let secilenSaat = "";
 
-    // Sayfa ilk açıldığında bugünün tarihini minimum sınır olarak ayarla
     document.addEventListener("DOMContentLoaded", () => {
         const bugun = new Date().toISOString().split('T')[0];
         document.getElementById('tarihInput').min = bugun;
@@ -200,36 +187,41 @@
     }
 
     function saatEkraniGetir() {
-        document.getElementById('question').innerHTML = "şimdi sıraa saatte ⏰";
+        document.getElementById('question').innerHTML = "Şimdi sıraa saatte ";
         
         // 2. Görsel: number18.webp
         gorselDegistir("number18.webp");
 
         const buttonArea = document.getElementById('buttonArea');
         buttonArea.innerHTML = `
-            <button class="option-btn" onclick="saatSec('17:00')">17:00</button>
-            <button class="option-btn" onclick="saatSec('19:00')">19:00</button>
-            <button class="option-btn" onclick="saatSec('20:30')">20:30</button>
-            <button class="option-btn" onclick="saatSec('21:30')">21:30</button>
+            <input type="time" id="saatInput" value="20:00">
+            <button id="yesBtn" style="width: 100%;" onclick="saatiKaydet()">Saati Onayla </button>
         `;
     }
 
-    function saatSec(saat) {
-        secilenSaat = saat;
-        document.getElementById('question').innerHTML = "Harika! Sözleştik 🚀<br><small style='font-size: 13px; color: #ec4899; display:block; margin-top:8px;'>WhatsApp'a yönlendiriliyorsun...</small>";
+    function saatiKaydet() {
+        const saatVal = document.getElementById('saatInput').value;
+        if (!saatVal) {
+            alert("Lütfen bir saat seçiniz!");
+            return;
+        }
+
+        secilenSaat = saatVal;
+        
+        document.getElementById('question').innerHTML = "Harika! Sözleştik <br><small style='font-size: 13px; color: #ec4899; display:block; margin-top:8px;'>WhatsApp'a yönlendiriliyorsun...</small>";
 
         // 3. Görsel (Son Adım): number17.webp
         gorselDegistir("number17.webp");
 
         const buttonArea = document.getElementById('buttonArea');
         buttonArea.innerHTML = `
-            <button id="yesBtn" style="transform: scale(1.05);" onclick="whatsappGonder()">WhatsApp'a Geç 💬</button>
+            <button id="yesBtn" style="transform: scale(1.05);" onclick="whatsappGonder()">WhatsApp'a Geç </button>
         `;
     }
 
     function whatsappGonder() {
         const telefonNumarasi = "905071265840"; 
-        const mesaj = encodeURIComponent(`${secilenTarih} saat ${secilenSaat} için sözleştik! ☕️✨`);
+        const mesaj = encodeURIComponent(`${secilenTarih} saat ${secilenSaat} için sözleştik! 🍽✨`);
         
         window.location.href = `https://wa.me/${telefonNumarasi}?text=${mesaj}`;
     }
