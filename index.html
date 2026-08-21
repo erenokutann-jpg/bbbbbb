@@ -208,7 +208,8 @@
 
         secilenSaat = saatVal;
         
-        document.getElementById('question').innerHTML = "Harika! Sözleştik <br><small style='font-size: 13px; color: #ec4899; display:block; margin-top:8px;'>WhatsApp'a yönlendiriliyorsun...</small>";
+        // Metin stilini ve rengini ana h1 başlığı ile birebir aynı yaptık
+        document.getElementById('question').innerHTML = "Harika! Sözleştik <br>WhatsApp'a yönlendiriliyorsun...";
 
         // 3. Görsel (Son Adım): number17.webp
         gorselDegistir("number17.webp");
@@ -221,7 +222,7 @@
 
     function whatsappGonder() {
         const telefonNumarasi = "905071265840"; 
-        const mesaj = encodeURIComponent(`${secilenTarih} saat ${secilenSaat} için sözleştik! 🍽✨`);
+        const mesaj = encodeURIComponent(`${secilenTarih} saat ${secilenSaat} için sözleştik `);
         
         window.location.href = `https://wa.me/${telefonNumarasi}?text=${mesaj}`;
     }
