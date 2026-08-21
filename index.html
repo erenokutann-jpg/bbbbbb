@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 🍽🍸🍻💖 </title>
 
-    <!-- WebP görselleri için ön yükleme -->
     <link rel="preload" as="image" href="number11.webp">
     <link rel="preload" as="image" href="number17.webp">
     <link rel="preload" as="image" href="number18.webp">
@@ -105,7 +104,6 @@
             width: 100%;
         }
 
-        /* Takvim ve Saat Input Stilleri */
         input[type="date"], input[type="time"] {
             width: 100%;
             padding: 14px;
@@ -123,12 +121,15 @@
 </head>
 <body>
 
+<!-- Arka Plan Müzik Ötesi -->
+<audio id="arkaPlanMuzik" loop>
+    <source src="muzik.mp3" type="audio/mpeg">
+</audio>
+
 <div class="container">
-    <!-- Açılış Başlığı -->
     <h1 id="question">Merhaba Gecoshka lütfen müsait olduğun tarihi seçer misin 🍽🍸🍻</h1>
     
     <div class="img-wrapper">
-        <!-- 1. Görsel: number11.webp -->
         <img id="anaGorsel" src="number11.webp" alt="Görsel">
     </div>
     
@@ -174,6 +175,10 @@
     }
 
     function takvimTarihiKaydet() {
+        // Tarih butonuna tıklandığında müziği başlatıyoruz
+        const muzik = document.getElementById('arkaPlanMuzik');
+        muzik.play().catch(e => console.log("Müzik oynatma engellendi:", e));
+
         const inputVal = document.getElementById('tarihInput').value;
         if (!inputVal) {
             alert("Lütfen bir tarih seçiniz!");
@@ -188,8 +193,6 @@
 
     function saatEkraniGetir() {
         document.getElementById('question').innerHTML = "Şimdi sıraa saatte ";
-        
-        // 2. Görsel: number18.webp
         gorselDegistir("number18.webp");
 
         const buttonArea = document.getElementById('buttonArea');
@@ -208,10 +211,7 @@
 
         secilenSaat = saatVal;
         
-        // Metin stilini ve rengini ana h1 başlığı ile birebir aynı yaptık
         document.getElementById('question').innerHTML = "Harika! Sözleştik <br>WhatsApp'a yönlendiriliyorsun...";
-
-        // 3. Görsel (Son Adım): number17.webp
         gorselDegistir("number17.webp");
 
         const buttonArea = document.getElementById('buttonArea');
