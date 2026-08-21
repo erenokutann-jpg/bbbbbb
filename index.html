@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 🍽🍸🍻💖 </title>
 
+    <!-- WebP görselleri ve Müzik için ön yükleme -->
     <link rel="preload" as="image" href="number11.webp">
     <link rel="preload" as="image" href="number17.webp">
     <link rel="preload" as="image" href="number18.webp">
+    <link rel="preload" as="audio" href="muzik.mp3">
 
     <style>
         * {
@@ -121,8 +123,8 @@
 </head>
 <body>
 
-<!-- Arka Plan Müzik Ötesi -->
-<audio id="arkaPlanMuzik" loop>
+<!-- Preload ile hızlı yükleme sağlanan müzik etiketi -->
+<audio id="arkaPlanMuzik" loop preload="auto">
     <source src="muzik.mp3" type="audio/mpeg">
 </audio>
 
@@ -152,6 +154,28 @@
     let secilenTarih = "";
     let secilenSaat = "";
 
+    // MÜZİĞİ EN HIZLI BAŞLATAN MEKANİZMA
+    const muzik = document.getElementById('arkaPlanMuzik');
+
+    function muzigiBaslat() {
+        if (muzik.paused) {
+            muzik.play().then(() => {
+                // Müzik başladıysa dinleyicileri kaldırıyoruz
+                document.removeEventListener('click', muzigiBaslat);
+                document.removeEventListener('touchstart', muzigiBaslat);
+            }).catch(() => {});
+        }
+    }
+
+    // Sayfa açıldığı an otomatik oynatmayı dener
+    window.addEventListener('load', () => {
+        muzik.play().catch(() => {
+            // Tarayıcı engellerse ekrana yapılan ilk tık/dokunuşta anında çalar
+            document.addEventListener('click', muzigiBaslat, { once: true });
+            document.addEventListener('touchstart', muzigiBaslat, { once: true });
+        });
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
         const bugun = new Date().toISOString().split('T')[0];
         document.getElementById('tarihInput').min = bugun;
@@ -175,9 +199,7 @@
     }
 
     function takvimTarihiKaydet() {
-        // Tarih butonuna tıklandığında müziği başlatıyoruz
-        const muzik = document.getElementById('arkaPlanMuzik');
-        muzik.play().catch(e => console.log("Müzik oynatma engellendi:", e));
+        muzigiBaslat(); // Her ihtimale karşı ilk butonda da tetikliyoruz
 
         const inputVal = document.getElementById('tarihInput').value;
         if (!inputVal) {
