@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> ☕️🍸🍻💖 </title>
+    <title>☕️🍸🍻💖</title>
 
     <!-- WebP görselleri ve Müzik için ön yükleme -->
     <link rel="preload" as="image" href="number11.webp">
@@ -123,13 +123,12 @@
 </head>
 <body>
 
-<!-- Preload ile hızlı yükleme sağlanan müzik etiketi -->
 <audio id="arkaPlanMuzik" loop preload="auto">
     <source src="muzik.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
-    <h1 id="question">Merhaba Burcu lütfen müsait olduğun tarihi seçer misin ☕️🍸🍻</h1>
+    <h1 id="question">Merhaba Gül lütfen müsait olduğun tarihi seçer misin ☕️🍸🍻</h1>
     
     <div class="img-wrapper">
         <img id="anaGorsel" src="number11.webp" alt="Görsel">
@@ -137,7 +136,7 @@
     
     <div class="buttons" id="buttonArea">
         <input type="date" id="tarihInput">
-        <button id="yesBtn" onclick="takvimTarihiKaydet()">Tarihi Onayla </button>
+        <button id="yesBtn" onclick="takvimTarihiKaydet()">Tarihi Onayla</button>
     </div>
 </div>
 
@@ -154,23 +153,19 @@
     let secilenTarih = "";
     let secilenSaat = "";
 
-    // MÜZİĞİ EN HIZLI BAŞLATAN MEKANİZMA
     const muzik = document.getElementById('arkaPlanMuzik');
 
     function muzigiBaslat() {
         if (muzik.paused) {
             muzik.play().then(() => {
-                // Müzik başladıysa dinleyicileri kaldırıyoruz
                 document.removeEventListener('click', muzigiBaslat);
                 document.removeEventListener('touchstart', muzigiBaslat);
             }).catch(() => {});
         }
     }
 
-    // Sayfa açıldığı an otomatik oynatmayı dener
     window.addEventListener('load', () => {
         muzik.play().catch(() => {
-            // Tarayıcı engellerse ekrana yapılan ilk tık/dokunuşta anında çalar
             document.addEventListener('click', muzigiBaslat, { once: true });
             document.addEventListener('touchstart', muzigiBaslat, { once: true });
         });
@@ -199,7 +194,7 @@
     }
 
     function takvimTarihiKaydet() {
-        muzigiBaslat(); // Her ihtimale karşı ilk butonda da tetikliyoruz
+        muzigiBaslat();
 
         const inputVal = document.getElementById('tarihInput').value;
         if (!inputVal) {
@@ -220,7 +215,7 @@
         const buttonArea = document.getElementById('buttonArea');
         buttonArea.innerHTML = `
             <input type="time" id="saatInput" value="20:00">
-            <button id="yesBtn" style="width: 100%;" onclick="saatiKaydet()">Saati Onayla </button>
+            <button id="yesBtn" style="width: 100%;" onclick="saatiKaydet()">Saati Onayla</button>
         `;
     }
 
@@ -233,20 +228,26 @@
 
         secilenSaat = saatVal;
         
-        document.getElementById('question').innerHTML = "Harika! Sözleştik <br>WhatsApp'a yönlendiriliyorsun...";
+        document.getElementById('question').innerHTML = "Harika! Sözleştik <br>Instagram'a yönlendiriliyorsun...";
         gorselDegistir("number17.webp");
 
         const buttonArea = document.getElementById('buttonArea');
         buttonArea.innerHTML = `
-            <button id="yesBtn" style="transform: scale(1.05);" onclick="whatsappGonder()">WhatsApp'a Geç </button>
+            <button id="yesBtn" style="transform: scale(1.05);" onclick="instagramaGonder()">Instagram'a Geç</button>
         `;
     }
 
-    function whatsappGonder() {
-        const telefonNumarasi = "905071265840"; 
-        const mesaj = encodeURIComponent(`${secilenTarih} saat ${secilenSaat} için sözleştik `);
-        
-        window.location.href = `https://wa.me/${telefonNumarasi}?text=${mesaj}`;
+    function instagramaGonder() {
+        const kullaniciAdi = "eren_okutan";
+        const mesaj = `${secilenTarih} saat ${secilenSaat} için sözleştik ✨`;
+
+        // Mesajı panoya kopyala (DM'de kolayca yapıştırabilmesi için)
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(mesaj).catch(() => {});
+        }
+
+        // Profil sayfasına yönlendir
+        window.location.href = `https://www.instagram.com/${kullaniciAdi}/`;
     }
 </script>
 
